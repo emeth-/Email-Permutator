@@ -1,6 +1,7 @@
 var running = 0;
 var start_time = new Date().getTime();
 var li_extractor_data = [];
+var total_pages = 0;
 
 function round(value, decimals) {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
@@ -48,7 +49,7 @@ function next_page_loaded() {
 function next_page() {
     console.log("triggering next page...", running);
     var next_page_exists = true; //todo, if next button not found or otherwise on last page, stop.
-    if (next_page_exists && running) {
+    if (next_page_exists && running && total_pages <= 100) {
         console.log("Next page triggered!");
         jQuery(".results-paginator").find(".next").trigger('click');
         setTimeout(function(){
@@ -65,6 +66,7 @@ function next_page() {
         console.log("**DONE", li_extractor_data);
         console.log(json.STRINGIFY(li_extractor_data));
         chrome.runtime.sendMessage({"badgetext": ""});
+        total_pages = 0;
         //JSONToCSVConvertor(li_extractor_data, "LinkedInExtractor.csv", true);
         //todo, output excel spreadsheet here.
     }
@@ -109,6 +111,7 @@ function extract_data() {
       total_string = total_string.toString();
     }
     chrome.runtime.sendMessage({"badgetext": total_string});
+    total_pages += 1;
 
     next_page();
 }
