@@ -1,5 +1,6 @@
 var running = 0;
 var start_time = new Date().getTime();
+var li_extractor_data = [];
 
 function round(value, decimals) {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
@@ -62,6 +63,7 @@ function next_page() {
         elapsed_minutes = round(elapsed_minutes, 1);
         alert("Completed pulling info from website (took "+elapsed_minutes+" minutes). \n\nProcess began of searching for email addresses - results will be emailed to you.");
         console.log("**DONE", li_extractor_data);
+        console.log(json.STRINGIFY(li_extractor_data));
         chrome.runtime.sendMessage({"badgetext": ""});
         //JSONToCSVConvertor(li_extractor_data, "LinkedInExtractor.csv", true);
         //todo, output excel spreadsheet here.
@@ -91,7 +93,13 @@ function extract_data() {
             person.title = comp_pieces.shift(); //Drop title
             person.company_name = comp_pieces.join(" at ");
         }
-        li_extractor_data.push(person);
+        var new_person = {
+          "name": person.name,
+          "location": person.location,
+          "title": person.title,
+          "company_name": person.company_name
+        };
+        li_extractor_data.push(new_person);
     });
     var total_string = li_extractor_data.length;
     if (total_string > 1000) {
@@ -104,7 +112,6 @@ function extract_data() {
 
     next_page();
 }
-var li_extractor_data = [];
 
 /*
 $( document ).ready(function() {
