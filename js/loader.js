@@ -64,7 +64,7 @@ function next_page() {
         elapsed_minutes = round(elapsed_minutes, 1);
         alert("Completed pulling info from website (took "+elapsed_minutes+" minutes). \n\nProcess began of searching for email addresses - results will be emailed to you.");
         console.log("**DONE", li_extractor_data);
-        console.log(json.STRINGIFY(li_extractor_data));
+        console.log(JSON.stringify(li_extractor_data));
         chrome.runtime.sendMessage({"badgetext": ""});
         total_pages = 0;
         //JSONToCSVConvertor(li_extractor_data, "LinkedInExtractor.csv", true);
