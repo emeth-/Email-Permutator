@@ -2,6 +2,24 @@ var running = 0;
 var start_time = new Date().getTime();
 var li_extractor_data = [];
 var total_pages = 0;
+var email_address_results = "";
+var max_num_search_pages = 5;
+var liextractor_api_url = "";
+
+chrome.storage.sync.get(null, function(items) {
+
+    if (items['email_address_results']) {
+        email_address_results = items['email_address_results'];
+    }
+
+    if (items['max_num_search_pages']) {
+        max_num_search_pages = items['max_num_search_pages'];
+    }
+
+    if (items['liextractor_api_url']) {
+        liextractor_api_url = items['liextractor_api_url'];
+    }
+});
 
 function round(value, decimals) {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
@@ -49,7 +67,7 @@ function next_page_loaded() {
 function next_page() {
     console.log("triggering next page...", running);
     var next_page_exists = true; //todo, if next button not found or otherwise on last page, stop.
-    if (next_page_exists && running && total_pages <= 100) {
+    if (next_page_exists && running && total_pages <= max_num_search_pages) {
         console.log("Next page triggered!");
         jQuery(".results-paginator").find(".next").trigger('click');
         setTimeout(function(){
@@ -62,13 +80,34 @@ function next_page() {
         var elapsed_seconds = (end_time-start_time)/1000;
         var elapsed_minutes = elapsed_seconds/60;
         elapsed_minutes = round(elapsed_minutes, 1);
-        alert("Completed pulling info from website (took "+elapsed_minutes+" minutes). \n\nProcess began of searching for email addresses - results will be emailed to you.");
+        alert("Completed pulling info from website (took "+elapsed_minutes+" minutes). \n\nProcess began of searching for email addresses - results will be emailed to you at "+email_address_results");
         console.log("**DONE", li_extractor_data);
         console.log(JSON.stringify(li_extractor_data));
         chrome.runtime.sendMessage({"badgetext": ""});
         total_pages = 0;
+
+        var post_data = {};
+        post_data['send_to_email'] = email_address_results;
+        post_data['data'] = JSON.stringify(li_extractor_data);
+
+        $.ajax({
+            type: 'POST',
+            url: liextractor_api_url+'/new_job',
+            data: {
+               "auth_code": equalizer_auth.equalizer_auth,
+               "blackhole_email": jQuery(this).attr('blackhole_email'),
+               "email_id": jQuery(this).attr('email_id')
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log("add to blackhole success", data);
+            },
+            error: function(e, type, message) {
+                console.log("ERROR", e, type, message);
+            }
+        });
+
         //JSONToCSVConvertor(li_extractor_data, "LinkedInExtractor.csv", true);
-        //todo, output excel spreadsheet here.
     }
 }
 
