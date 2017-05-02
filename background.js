@@ -19,4 +19,10 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 });
 
 
+chrome.runtime.onInstalled.addListener(function(details) {
+    if (details.reason.search(/install/g) === -1) return;
+    chrome.runtime.openOptionsPage();
+});
+
+
 chrome.browserAction.onClicked.addListener(send_to_tab);
