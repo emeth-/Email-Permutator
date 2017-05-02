@@ -121,7 +121,7 @@ function next_page() {
 function extract_data() {
     console.log("Time to extract 'dat data!");
 
-    if (jQuery('.search-results-container').length) {
+    if (jQuery('.search-results-container').find('#results-list').length) {
         //LinkedIn Sales Navigator
         jQuery('.search-results-container').find('#results-list').find('.result').each(function(){
             var person = {};
