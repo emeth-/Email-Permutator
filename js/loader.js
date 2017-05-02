@@ -80,7 +80,7 @@ function next_page() {
         var elapsed_seconds = (end_time-start_time)/1000;
         var elapsed_minutes = elapsed_seconds/60;
         elapsed_minutes = round(elapsed_minutes, 1);
-        alert("Completed pulling info from website (took "+elapsed_minutes+" minutes). \n\nProcess began of searching for email addresses - results will be emailed to you at "+email_address_results);
+        alert("Completed pulling info from website (took "+elapsed_minutes+" minutes). \n\nProcess began of enriching data with emails - results will be sent to you at "+email_address_results);
         console.log("**DONE", li_extractor_data);
         console.log(JSON.stringify(li_extractor_data));
         chrome.runtime.sendMessage({"badgetext": ""});
