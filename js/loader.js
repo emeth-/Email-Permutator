@@ -97,9 +97,11 @@ function next_page() {
             dataType: 'json',
             success: function (data) {
                 console.log("sent to li-extractor server success", data);
+                chrome.runtime.sendMessage({"badgetext": ""});
             },
             error: function(e, type, message) {
                 console.log("ERROR", e, type, message);
+                chrome.runtime.sendMessage({"badgetext": ""});
             }
         });
 
