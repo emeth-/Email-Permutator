@@ -20,7 +20,8 @@
         "storage",
         "tabs",
         "contextMenus",
-        "activeTab"
+        "activeTab",
+        "<all_urls>"
     ],
     "web_accessible_resources": [
         "img/circleLogo.png",
@@ -38,5 +39,9 @@
        "default_title":"Trigger Extractor"
     },
     "version_name": "production",
-    "manifest_version": 3
+    "manifest_version": 3,
+    "options_ui":{
+       "page":"options.html",
+       "chrome_style":false
+    }
 }

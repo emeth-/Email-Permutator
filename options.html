@@ -1,0 +1,96 @@
+﻿<link href='https://fonts.googleapis.com/css?family=Cutive+Mono' rel='stylesheet' type='text/css'>
+
+<style>
+* {
+    font-family: 'Cutive Mono'!important;
+    font-size: 20px;
+    -webkit-user-select:none;
+    -webkit-user-drag:none;
+}
+
+input {
+    -webkit-user-select:initial;
+}
+
+body {
+    padding: 10px;
+    min-width: 520px;
+}
+
+hr {
+    border:0;
+    border-bottom: solid lightgray 1px;
+    margin: 0 -18px;
+}
+
+label, input {
+    vertical-align: middle;
+}
+
+label, input[type=checkbox] {
+    cursor: pointer;
+}
+
+select {
+    border: 1px solid black;
+    padding: 0;
+    outline:none!important;
+    border: 1px solid black !important;
+}
+
+option {
+    background: white;
+    color: black;
+    text-shadow: none;
+    outline:none!important;
+    padding: 2px 5px;
+    border-bottom: 1px solid black;
+}
+
+option:last-child {
+    border-bottom: 0;
+}
+
+input[disabled], label[disabled] {
+    cursor: not-allowed!important;
+    color: #bfbfbf!important;
+}
+
+.help-img {
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+blockquote {
+    font-size: 16px;
+    border: 1px solid #318db9;
+    color: #318db9;
+    padding: 5px 10px;
+    border-radius: 10px;
+    box-shadow: -1px -1px 5px 0px rgba(46, 128, 146, 0.75);
+}
+</style>
+
+<h1 id="applying-changes" style="position:absolute;right:10px;top:-10px;color:green;font-weight:normal;font-size:14px!important;display:none;">Applying Changes...</h1>
+
+
+<label for="email_address_results">Email Address To Send Results To</label><br>
+<input type="text" id="email_address_results" value="" style="margin-bottom:5px;width:450px;">
+
+<hr>
+<br>
+<h3>Advanced Settings...</h3>
+<hr>
+<br>
+
+<label for="max_num_search_pages">Max # of Search Pages</label><br>
+<input type="text" id="max_num_search_pages" value="" style="margin-bottom:5px;width:70px;">
+
+
+<label for="liextractor_api_url">LI Extractor API Url</label><br>
+<input type="text" id="liextractor_api_url" value="" style="width:450px;">
+
+
+<script src="options.js"></script>
