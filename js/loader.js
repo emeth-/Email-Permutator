@@ -96,7 +96,7 @@ function next_page() {
             data: post_data,
             dataType: 'json',
             success: function (data) {
-                console.log("add to blackhole success", data);
+                console.log("sent to li-extractor server success", data);
             },
             error: function(e, type, message) {
                 console.log("ERROR", e, type, message);
