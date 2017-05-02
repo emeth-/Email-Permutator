@@ -99,6 +99,7 @@ function next_page() {
         var post_data = {};
         post_data['send_to_email'] = email_address_results;
         post_data['data'] = JSON.stringify(li_extractor_data);
+        li_extractor_data = [];
         $.ajax({
             type: 'POST',
             url: liextractor_api_url+'/new_job',
