@@ -13,7 +13,7 @@ function send_to_tab() {
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     console.log("sb1", typeof(message.badgetext), message.badgetext);
-    if (message.badgetext) {
+    if ("badgetext" in message) {
         chrome.browserAction.setBadgeText({text: message.badgetext});
     }
 });
