@@ -42,34 +42,44 @@ chrome.runtime.onMessage.addListener(
     }
 });
 
-//todo, update badge on icon with page number being scanned.
-
 function next_page_loaded() {
     console.log("Next page loaded check!");
-    if (jQuery('.search-results__total').length > 0) {
-        console.log("Overall page is loaded...");
-        //page is loaded
-        if (jQuery('.search-is-loading.search-results-container').length) {
-        console.log("aaaaa1");
-            //Search results loading...
-            setTimeout(function(){
-                next_page_loaded();
-            }, 300);
-        }
-        else {
-        console.log("aaaaa2");
-            //Search results completed loading!
-            extract_data();
-        }
+
+    var is_loading = false;
+    //Sales Navigator
+    if (jQuery(".results-loader-wrapper").find('.results-loader:visible').length > 0) {
+        is_loading = true;
+    }
+    //Normal LinkedIn
+    if (jQuery('.search-is-loading.search-results-container').length > 0) {
+        is_loading = true;
+    }
+
+    if (is_loading) {
+        //Search results loading...
+        setTimeout(function(){
+            next_page_loaded();
+        }, 300);
+    }
+    else {
+        //Search results completed loading!
+        extract_data();
     }
 }
 
 function next_page() {
     console.log("triggering next page...", running);
-    var next_page_exists = true; //todo, if next button not found or otherwise on last page, stop.
-    if (next_page_exists && running && total_pages <= max_num_search_pages) {
-        console.log("Next page triggered!");
+    if (running && total_pages <= max_num_search_pages) {
+        console.log("Next page triggered!", jQuery(".next-pagination"), jQuery(".next-pagination").length);
+
+        //Normal LinkedIn
         jQuery(".results-paginator").find(".next").trigger('click');
+
+        //Sales Navigator
+        Array.from(document.getElementsByClassName("next-pagination")).forEach(function(element) {
+            element.click();
+        });
+
         setTimeout(function(){
             next_page_loaded();
         }, 1000);
@@ -89,7 +99,6 @@ function next_page() {
         var post_data = {};
         post_data['send_to_email'] = email_address_results;
         post_data['data'] = JSON.stringify(li_extractor_data);
-
         $.ajax({
             type: 'POST',
             url: liextractor_api_url+'/new_job',
@@ -112,34 +121,55 @@ function next_page() {
 function extract_data() {
     console.log("Time to extract 'dat data!");
 
-    jQuery('.search-result__wrapper').each(function(){
-        var person = {};
-        person.name = jQuery(this).find('.actor-name').text().trim();
-        person.image = jQuery(this).find('.search-result__image').find('img').attr('src') || "";
-        person.location = jQuery(this).find('.subline-level-2').text().trim();
-        person.tagline = jQuery(this).find('.subline-level-1').text().trim();
-        person.current_position = jQuery(this).find('.search-result__snippets').text().replace('Current:', '').trim();
-        person.distance = jQuery(this).find('.dist-value').text().trim();
-        person.title = "";
-        person.company_name = "";
-        if (person.current_position.length > 0) {
-            var comp_pieces = person.current_position.split(" at ");
-            person.title = comp_pieces.shift(); //Drop title
-            person.company_name = comp_pieces.join(" at ");
-        }
-        else {
-            var comp_pieces = person.tagline.split(" at ");
-            person.title = comp_pieces.shift(); //Drop title
-            person.company_name = comp_pieces.join(" at ");
-        }
-        var new_person = {
-          "name": person.name,
-          "location": person.location,
-          "title": person.title,
-          "company_name": person.company_name
-        };
-        li_extractor_data.push(new_person);
-    });
+    if (jQuery('.search-results-container').length) {
+        //LinkedIn Sales Navigator
+        jQuery('.search-results-container').find('#results-list').find('.result').each(function(){
+            var person = {};
+            person.name = jQuery(this).find('.name').text().trim();
+            person.company_name = jQuery(this).find('.company-name').text().trim();
+            person.title = jQuery(jQuery(this).find('.info').find('.info-value')[0]).text().trim();
+            person.location = jQuery(jQuery(this).find('.info').find('.info-value')[2]).text().trim();
+
+            var new_person = {
+              "name": person.name,
+              "location": person.location,
+              "title": person.title,
+              "company_name": person.company_name
+            };
+            li_extractor_data.push(new_person);
+        });
+    }
+    else {
+        //Normal LinkedIn
+        jQuery('.search-result__wrapper').each(function(){
+            var person = {};
+            person.name = jQuery(this).find('.actor-name').text().trim();
+            person.image = jQuery(this).find('.search-result__image').find('img').attr('src') || "";
+            person.location = jQuery(this).find('.subline-level-2').text().trim();
+            person.tagline = jQuery(this).find('.subline-level-1').text().trim();
+            person.current_position = jQuery(this).find('.search-result__snippets').text().replace('Current:', '').trim();
+            person.distance = jQuery(this).find('.dist-value').text().trim();
+            person.title = "";
+            person.company_name = "";
+            if (person.current_position.length > 0) {
+                var comp_pieces = person.current_position.split(" at ");
+                person.title = comp_pieces.shift(); //Drop title
+                person.company_name = comp_pieces.join(" at ");
+            }
+            else {
+                var comp_pieces = person.tagline.split(" at ");
+                person.title = comp_pieces.shift(); //Drop title
+                person.company_name = comp_pieces.join(" at ");
+            }
+            var new_person = {
+              "name": person.name,
+              "location": person.location,
+              "title": person.title,
+              "company_name": person.company_name
+            };
+            li_extractor_data.push(new_person);
+        });
+    }
     var total_string = li_extractor_data.length;
     if (total_string > 1000) {
         total_string = round(total_string/1000, 1).toString()+"k";
