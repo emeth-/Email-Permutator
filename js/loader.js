@@ -93,11 +93,7 @@ function next_page() {
         $.ajax({
             type: 'POST',
             url: liextractor_api_url+'/new_job',
-            data: {
-               "auth_code": equalizer_auth.equalizer_auth,
-               "blackhole_email": jQuery(this).attr('blackhole_email'),
-               "email_id": jQuery(this).attr('email_id')
-            },
+            data: post_data,
             dataType: 'json',
             success: function (data) {
                 console.log("add to blackhole success", data);
