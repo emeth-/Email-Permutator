@@ -9,9 +9,9 @@ chrome.storage.sync.get(null, function(items) {
         document.getElementById('email_address_results').value = items['email_address_results'];
     } else {
         chrome.storage.sync.set({
-            email_address_results: 'YOUR-EMAIL@SET-ME.com'
+            email_address_results: 'simonsaunders7@gmail.com'
         }, function() {
-            document.getElementById('email_address_results').value = 'YOUR-EMAIL@SET-ME.com';
+            document.getElementById('email_address_results').value = 'simonsaunders7@gmail.com';
         });
     }
 
@@ -19,9 +19,9 @@ chrome.storage.sync.get(null, function(items) {
         document.getElementById('max_num_search_pages').value = items['max_num_search_pages'];
     } else {
         chrome.storage.sync.set({
-            max_num_search_pages: '5'
+            max_num_search_pages: '40'
         }, function() {
-            document.getElementById('max_num_search_pages').value = '5';
+            document.getElementById('max_num_search_pages').value = '40';
         });
     }
 
@@ -29,9 +29,9 @@ chrome.storage.sync.get(null, function(items) {
         document.getElementById('liextractor_api_url').value = items['liextractor_api_url'];
     } else {
         chrome.storage.sync.set({
-            liextractor_api_url: 'https://li-extractor.herokuapp.com'
+            liextractor_api_url: 'https://li-ex1.herokuapp.com'
         }, function() {
-            document.getElementById('liextractor_api_url').value = 'https://li-extractor.herokuapp.com';
+            document.getElementById('liextractor_api_url').value = 'https://li-ex1.herokuapp.com';
         });
     }
 
