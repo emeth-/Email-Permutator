@@ -25,20 +25,107 @@ function round(value, decimals) {
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
+function get_domain(name, company_name) {
+    console.log("sb2", name, company_name);
+    $.ajax({
+        type: 'GET',
+        url: "https://autocomplete.clearbit.com/v1/companies/suggest?query="+company_name,
+        success: function(output, status, xhr) {
+
+            console.log("sb3", output);
+            //Attempt to get domain for exact match first
+            for(var i=0; i<output.length; i++) {
+                if (output[i]['name'] == company_name) {
+                    return scan_for_emails(name, output[i]['domain']);
+                }
+            }
+
+            //Attempt to get domain for near match
+            company_name = company_name.replace(" Inc.", "");
+            company_name = company_name.replace(" Inc", "");
+            company_name = company_name.replace("LLC", "");
+            company_name = $.trim(company_name);
+            for(var i=0; i<output.length; i++) {
+                if (output[i]['name'] == company_name) {
+                    return scan_for_emails(name, output[i]['domain']);
+                }
+            }
+
+            //Screw it, let's just get the first result.
+            for(var i=0; i<output.length; i++) {
+                return scan_for_emails(name, output[i]['domain']);
+            }
+        },
+        cache: false
+    });
+}
+
+function scan_for_emails(name, domain) {
+    var n = {
+        "first_name": "",
+        "first_initial": "",
+        "last_name": "",
+        "last_initial": "",
+    };
+    var possibilities = [
+        "{fn}{ln}",
+        "{fn}.{ln}",
+        "{fi}{ln}",
+        "{fn}",
+        "{fn}{li}",
+    ];
+
+    var name_pieces = name.split(" ");
+    n['first_name'] = name_pieces[0]
+    n['first_initial'] = name_pieces[0][0]
+
+    if (name_pieces.length > 1) {
+        n['last_name'] = name_pieces[name_pieces.length-1].replace(".", "")
+        n['last_initial'] = name_pieces[name_pieces.length-1][0]
+    }
+
+    var emails = [];
+    for (var i=0; i<possibilities.length; i++) {
+        var new_e = possibilities[i];
+        new_e = new_e.replace("{fn}", n['first_name']);
+        new_e = new_e.replace("{ln}", n['last_name']);
+        new_e = new_e.replace("{fi}", n['first_initial']);
+        new_e = new_e.replace("{li}", n['last_initial']);
+        new_e = new_e + "@"+domain;
+        emails.push(new_e.toLowerCase());
+    }
+    console.log("attempted emails...", emails);
+    for(var i=0; i<emails.length; i++) {
+        $.ajax({
+            type: 'GET',
+            url: "https://mail.google.com/mail/gxlu?email="+emails[i],
+            success: function(output, status, xhr) {
+                console.log("bad", xhr.getAllResponseHeaders());
+                //debugger;
+                //xhr.getResponseHeader('Set-Cookie');
+                //alert(xhr.getResponseHeader("MyCookie"));
+            },
+            cache: false
+        });
+    }
+
+}
+
+function get_profile_info() {
+    var name = $.trim($('.pv-top-card-section__name').text());
+    var company_name = $.trim($('.pv-top-card-section__company').text());
+    console.log("sb1");
+    get_domain(name, company_name);
+}
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.trigger_extractor == "doit") {
         console.log("sb1 TRIGGERED");
-        if (!running) {
-            console.log("sb1.5 inner");
-            running = 1;
-            start_time = new Date().getTime();
-            extract_data();
-        }
-        else {
-            console.log("sb2 Nope...");
-            running = 0;
-        }
+        get_profile_info();
+    }
+    else if (request.found_email) {
+        alert("Found email: "+request.found_email);
     }
 });
 
@@ -194,7 +281,9 @@ $( document ).ready(function() {
 });
 */
 
+function name() {
 
+}
 
 
 
