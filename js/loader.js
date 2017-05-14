@@ -99,11 +99,21 @@ function scan_for_emails(name, domain) {
         $.ajax({
             type: 'GET',
             url: "https://mail.google.com/mail/gxlu?email="+emails[i],
+            success: function(output, status, xhr) {},
+            cache: false
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "https://api.github.com/search/commits?q=committer-email:"+emails[i],
+            beforeSend: function(xhr){
+                xhr.setRequestHeader('Accept', 'application/vnd.github.cloak-preview');
+            },
+            current_email: emails[i],
             success: function(output, status, xhr) {
-                console.log("bad", xhr.getAllResponseHeaders());
-                //debugger;
-                //xhr.getResponseHeader('Set-Cookie');
-                //alert(xhr.getResponseHeader("MyCookie"));
+                if (output['total_count'] && output['total_count'] > 0) {
+                    found_email(this.current_email, "github");
+                }
             },
             cache: false
         });
@@ -125,9 +135,13 @@ chrome.runtime.onMessage.addListener(
         get_profile_info();
     }
     else if (request.found_email) {
-        alert("Found email: "+request.found_email);
+        found_email(request.found_email, "gmail");
     }
 });
+
+function found_email(email, source) {
+    alert("Found email: "+email+"\nSource: "+source);
+}
 
 function next_page_loaded() {
     console.log("Next page loaded check!");
