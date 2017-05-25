@@ -125,7 +125,9 @@ function scan_for_emails(name, domain) {
             type:'GET',
             current_email: emails[i],
             success: function(data){
-                var domain_results = .split('Reverse Whois results for')[1].split('domains that matched this search query')[0].split('There are')[1].trim();
+                var domain_results = data.split('Reverse Whois results for')[1].split('domains that matched this search query')[0].split('There are')[1].trim();
+                console.log("DNS check for", this.current_email, domain_results)
+                //Note, if this api goes down, swap to http://www.whoismind.com/email/myemail@gmail.com.html
                 domain_results = parseInt(domain_results);
                 if (domain_results > 0) {
                     found_email(this.current_email, "DNS");
@@ -133,6 +135,18 @@ function scan_for_emails(name, domain) {
             },
             cache: false
         });
+
+        $.ajax({
+            url:"https://haveibeenpwned.com/api/v2/breachedaccount/"+emails[i],
+            type:'GET',
+            current_email: emails[i],
+            success: function(data){
+                found_email(this.current_email, "HAVEIBEENPWNED");
+            },
+            cache: false
+        });
+
+
     }
 
 }
