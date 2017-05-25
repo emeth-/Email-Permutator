@@ -99,7 +99,9 @@ function scan_for_emails(name, domain) {
         $.ajax({
             type: 'GET',
             url: "https://mail.google.com/mail/gxlu?email="+emails[i],
-            success: function(output, status, xhr) {},
+            success: function(output, status, xhr) {
+                //results checked in background.js
+            },
             cache: false
         });
 
@@ -113,6 +115,20 @@ function scan_for_emails(name, domain) {
             success: function(output, status, xhr) {
                 if (output['total_count'] && output['total_count'] > 0) {
                     found_email(this.current_email, "github");
+                }
+            },
+            cache: false
+        });
+
+        $.ajax({
+            url:"http://viewdns.info/reversewhois/?q="+emails[i],
+            type:'GET',
+            current_email: emails[i],
+            success: function(data){
+                var domain_results = .split('Reverse Whois results for')[1].split('domains that matched this search query')[0].split('There are')[1].trim();
+                domain_results = parseInt(domain_results);
+                if (domain_results > 0) {
+                    found_email(this.current_email, "DNS");
                 }
             },
             cache: false
