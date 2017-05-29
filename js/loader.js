@@ -1,8 +1,16 @@
 var running = 0;
 var start_time = new Date().getTime();
 var li_extractor_data = [];
+var current_name;
+var current_company;
+
 function get_domain(name, company_name) {
     console.log("get_domain", name, company_name);
+    var original_company_name = company_name;
+    company_name = company_name.replace(" Inc.", "");
+    company_name = company_name.replace(" Inc", "");
+    company_name = company_name.replace("LLC", "");
+    company_name = $.trim(company_name);
     $.ajax({
         type: 'GET',
         url: "https://autocomplete.clearbit.com/v1/companies/suggest?query="+company_name,
@@ -11,16 +19,12 @@ function get_domain(name, company_name) {
             console.log("sb3", output);
             //Attempt to get domain for exact match first
             for(var i=0; i<output.length; i++) {
-                if (output[i]['name'] == company_name) {
+                if (output[i]['name'] == original_company_name) {
                     return scan_for_emails(name, output[i]['domain']);
                 }
             }
 
             //Attempt to get domain for near match
-            company_name = company_name.replace(" Inc.", "");
-            company_name = company_name.replace(" Inc", "");
-            company_name = company_name.replace("LLC", "");
-            company_name = $.trim(company_name);
             for(var i=0; i<output.length; i++) {
                 if (output[i]['name'] == company_name) {
                     return scan_for_emails(name, output[i]['domain']);
@@ -121,44 +125,54 @@ function ajax_after_milliseconds(ajaxconfig, timeperiod) {
 }
 
 function scan_for_profile() {
+    var name;
+    var company_name;
+
     if ($('.pv-top-card-section__name').length > 0 && $('.pv-top-card-section__company').length > 0) {
         //normal account logged in linkedin profile
-        var name = $.trim($('.pv-top-card-section__name').text());
-        var company_name = $.trim($('.pv-top-card-section__company').text());
-        console.log("get_profile_info", name, company_name);
-        get_domain(name, company_name);
+        name = $.trim($('.pv-top-card-section__name').text());
+        company_name = $.trim($('.pv-top-card-section__company').text());
     }
     else if ($('.profile-info').find('.member-name').length > 0 && $('.profile-info').find('.title').length > 0) {
         //Sales navigator linkedin profile
-        var name = $.trim($('.profile-info').find('.member-name').text());
-        var company_name = $('.profile-info').find('.title').text().split(' at ');
+        name = $.trim($('.profile-info').find('.member-name').text());
+        company_name = $('.profile-info').find('.title').text().split(' at ');
         if (company_name.length > 1) {
             company_name = $.trim(company_name[1])
         }
         else {
             company_name = "";
         }
-        console.log("get_profile_info", name, company_name);
-        get_domain(name, company_name);
     }
     else if ($('.profile-overview-content').find('#name').length > 0 && $('.profile-overview-content').find('.title').length > 0) {
         //logged out linkedin profile
-        var name = $.trim($('.profile-overview-content').find('#name').text());
-        var company_name = $('.profile-overview-content').find('.title').text().split(' at ');
+        name = $.trim($('.profile-overview-content').find('#name').text());
+        company_name = $('.profile-overview-content').find('.title').text().split(' at ');
         if (company_name.length > 1) {
             company_name = $.trim(company_name[1])
         }
         else {
             company_name = "";
         }
-        console.log("get_profile_info", name, company_name);
-        get_domain(name, company_name);
     }
-    else {
-        setTimeout(function(){
-            scan_for_profile();
-        }, 300)
+
+    if (name && company_name) {
+        //We are on a profile page
+        console.log("on profile page...", name, current_name)
+        if (name != current_name || company_name != current_company) {
+            //The profile is different than the last one we loaded
+            current_name = name;
+            current_company = company_name;
+            $('.liext-emaildata').remove();
+            console.log("get_profile_info", name, company_name);
+            get_domain(name, company_name);
+        }
     }
+
+    setTimeout(function(){
+        //LI will swap profiles without reloading the page, poll for changes.
+        scan_for_profile();
+    }, 700);
 }
 
 chrome.runtime.onMessage.addListener(
@@ -190,19 +204,19 @@ function found_email(email, source) {
     }
 
     if ($('.pv-top-card-section__headline').length > 0) {
-        $('.pv-top-card-section__headline').after('<h2 class="Sans-19px-black-85%" title="Source: '+source+'">'+email+' ['+source_text+']</h2>');
+        $('.pv-top-card-section__headline').after('<h2 class="liext-emaildata Sans-19px-black-85%" title="Source: '+source+'">'+email+' ['+source_text+']</h2>');
     }
     else if ($('.profile-overview-content').find('.title').length > 0) {
-        $('.profile-overview-content').find('.title').after('<p class="headline email" data-section="headline" title="Source: '+source+'">'+email+' ['+source_text+']</p>');
+        $('.profile-overview-content').find('.title').after('<p class="liext-emaildata headline email" data-section="headline" title="Source: '+source+'">'+email+' ['+source_text+']</p>');
     }
     else if ($('.liext-emails').length > 0) {
         var htmlz = '';
-        htmlz += '<ul class="liext-emails"><li>'+email+' ['+source_text+']</li></ul>';
+        htmlz += '<ul class="liext-emaildata liext-emails"><li>'+email+' ['+source_text+']</li></ul>';
         $('.liext-emails').append(htmlz);
     }
     else if ($('.profile-info').find('.title').length > 0) {
-        var htmlz = '<h4 class="sub-headline">Emails</h4>';
-        htmlz += '<ul class="liext-emails"><li>'+email+' ['+source_text+']</li></ul>';
+        var htmlz = '<h4 class="sub-headline liext-emaildata">Emails</h4>';
+        htmlz += '<ul class="liext-emaildata liext-emails"><li>'+email+' ['+source_text+']</li></ul>';
         $('.profile-info').find('.title').parent().after(htmlz);
     }
 
