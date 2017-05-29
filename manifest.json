@@ -42,9 +42,5 @@
        "default_title":"Trigger Extractor"
     },
     "version_name": "production",
-    "manifest_version": 3,
-    "options_ui":{
-       "page":"options.html",
-       "chrome_style":false
-    }
+    "manifest_version": 3
 }
