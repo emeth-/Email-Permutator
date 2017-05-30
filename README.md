@@ -1,5 +1,7 @@
 # E-Reveal
 
+Get it on the Chrome Webstore [HERE](https://chrome.google.com/webstore/detail/e-reveal/cfjoijpnimmgcijcofonhdipdppipppl)!
+
 Reveal email addresses on LinkedIn Profiles based on a LIVE search on Google Apps for Business, DNS records, and Github code.
 
 How does it work?
