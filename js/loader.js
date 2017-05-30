@@ -158,7 +158,6 @@ function scan_for_profile() {
 
     if (name && company_name) {
         //We are on a profile page
-        console.log("on profile page...", name, current_name)
         if (name != current_name || company_name != current_company) {
             //The profile is different than the last one we loaded
             current_name = name;

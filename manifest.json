@@ -16,10 +16,7 @@
         }
     ],
     "permissions": [
-        "https://*.linkedin.com/*",
-        "storage",
         "tabs",
-        "contextMenus",
         "activeTab",
         "<all_urls>",
         "webRequest",
