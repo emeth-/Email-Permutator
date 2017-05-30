@@ -1,8 +1,3 @@
-chrome.browserAction.setIcon({
-    path: 'img/circleLogo.png'
-});
-
-
 function send_to_tab_extension_clicked() {
     send_to_tab({trigger_extractor: "doit"});
 }
@@ -15,13 +10,8 @@ function send_to_tab(data) {
     });
 }
 
-chrome.browserAction.onClicked.addListener(send_to_tab_extension_clicked);
-
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if ("badgetext" in message) {
-        chrome.browserAction.setBadgeText({text: message.badgetext});
-    }
-    else if ("dns_check" in message) {
+    if ("dns_check" in message) {
         //Gotta do this here, because it's http and linkedin is https
         $.ajax({
             url:"http://viewdns.info/reversewhois/?q="+message['dns_check'],

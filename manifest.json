@@ -1,6 +1,6 @@
 {
-    "name": "LI Extractor",
-    "description": "After performing a LI search, click this extension to trigger an download of all the data.",
+    "name": "E-Reveal",
+    "description": "Reveal email addresses on LinkedIn Profiles",
     "version": "1.0.1",
     "icons": {
         "128": "img/circleLogo.png"
@@ -33,10 +33,6 @@
             "background.js"
        ],
        "persistent":true
-    },
-    "browser_action":{
-       "default_icon":"img/circleLogo.png",
-       "default_title":"Trigger Extractor"
     },
     "version_name": "production",
     "manifest_version": 3
