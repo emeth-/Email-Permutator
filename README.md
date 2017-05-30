@@ -15,3 +15,4 @@ NOTE
 - Your browser tab with the LinkedIn profile page must be active when you open it to kick off the search.
 - Not every profile will have an email found.
 - Some profiles will have multiple emails found.
+- This plugin is fully open source, so you can verify the code yourself! Check it out here: https://github.com/emeth-/E-Reveal
