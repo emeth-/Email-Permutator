@@ -177,10 +177,7 @@ function scan_for_profile() {
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log("message received...........", request);
-    if (request.trigger_extractor == "doit") {
-        scan_for_profile();
-    }
-    else if (request.found_email) {
+    if (request.found_email) {
         found_email(request.found_email, "gmail");
     }
     else if (request.found_email_dns) {
