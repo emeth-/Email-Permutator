@@ -1,7 +1,7 @@
 {
     "name": "E-Reveal",
     "description": "Reveal email addresses on LinkedIn Profiles",
-    "version": "1.0.1",
+    "version": "1.2.1",
     "icons": {
         "128": "img/circleLogo.png"
     },
