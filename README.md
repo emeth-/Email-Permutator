@@ -19,7 +19,7 @@ When you visit a LinkedIn profile, the chrome extension will:
 - We check Github's unauthenticated api for any commits made by an email
 - We check HaveIBeenPwned to see if an email has been dumped in any hacks
 
-None of this information is communicated to a server. All these checks are done straight from your browser, with the results immediately displayed on the LinkedIn profile (and never stored anywhere).
+All these checks are done straight from your browser, with the results immediately displayed on the LinkedIn profile (and never stored anywhere).
 
 # NOTE
 
