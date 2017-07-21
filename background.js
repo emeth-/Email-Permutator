@@ -1,8 +1,3 @@
-function send_to_tab_extension_clicked() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        send_to_tab({trigger_extractor: "doit"}, tabs[0].id);
-    });
-}
 
 function send_to_tab(data, tab_id) {
     chrome.tabs.sendMessage(parseInt(tab_id), data, function(response) {
