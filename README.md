@@ -24,5 +24,6 @@ None of this information is communicated to a server. All these checks are done 
 # NOTE
 
 - Not every profile will have an email found.
+- Github and HIBP are rate-limited, so if you load too many profiles in rapid succession only the DNS lookup and GMAIL checks will run. This automatically resolves itself over time.
 - Some profiles will have multiple emails found.
 - This plugin is fully open source, so you can verify the code yourself! Check it out here: https://github.com/emeth-/E-Reveal
