@@ -1,12 +1,12 @@
 function send_to_tab_extension_clicked() {
-    send_to_tab({trigger_extractor: "doit"});
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        send_to_tab({trigger_extractor: "doit"}, tabs[0].id);
+    });
 }
 
-function send_to_tab(data) {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, data, function(response) {
-            console.log("Sent to tab...", data);
-        });
+function send_to_tab(data, tab_id) {
+    chrome.tabs.sendMessage(parseInt(tab_id), data, function(response) {
+        console.log("Sent to tab...", data);
     });
 }
 
@@ -17,17 +17,21 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             url:"http://viewdns.info/reversewhois/?q="+message['dns_check'],
             type:'GET',
             current_email: message['dns_check'],
+            tab_id: sender.tab.id,
             success: function(data){
                 var domain_results = data.split('Reverse Whois results for')[1].split('domains that matched this search query')[0].split('There are')[1].trim();
                 console.log("DNS check for", this.current_email, domain_results)
                 //Note, if this api goes down, swap to http://www.whoismind.com/email/myemail@gmail.com.html
                 domain_results = parseInt(domain_results);
                 if (domain_results > 0) {
-                    send_to_tab({found_email_dns: this.current_email});
+                    send_to_tab({found_email_dns: this.current_email}, this.tab_id);
                 }
             },
             cache: false
         });
+    }
+    if ("my_tab_id" in message) {
+        send_to_tab({"tab_id": sender.tab.id}, sender.tab.id);
     }
 });
 
@@ -68,8 +72,9 @@ chrome.webRequest.onHeadersReceived.addListener(
                     //parser.href = "https://mail.google.com/mail/gxlu?email=bobdole@gmail.com&_=1494707114226";
                     parser.href = details.url;
                     email = parser.search.split('email=')[1].split('&')[0]
+                    tab_id = parser.search.split('tab_id=')[1].split('&')[0]
 
-                    send_to_tab({found_email: email});
+                    send_to_tab({found_email: email}, tab_id);
                 }
             });
         }

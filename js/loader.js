@@ -3,6 +3,7 @@ var start_time = new Date().getTime();
 var li_extractor_data = [];
 var current_name;
 var current_company;
+var my_tab_id;
 
 function get_domain(name, company_name) {
     console.log("get_domain", name, company_name);
@@ -79,7 +80,7 @@ function scan_for_emails(name, domain) {
     for(var i=0; i<emails.length; i++) {
         $.ajax({
             type: 'GET',
-            url: "https://mail.google.com/mail/gxlu?email="+emails[i],
+            url: "https://mail.google.com/mail/gxlu?email="+emails[i]+"&tab_id="+my_tab_id,
             success: function(output, status, xhr) {
                 //results checked in background.js
             },
@@ -186,6 +187,10 @@ chrome.runtime.onMessage.addListener(
     else if (request.found_email_dns) {
         found_email(request.found_email_dns, "DNS");
     }
+    else if (request.tab_id) {
+        my_tab_id = request.tab_id;
+        scan_for_profile();
+    }
 });
 
 function found_email(email, source) {
@@ -222,5 +227,5 @@ function found_email(email, source) {
 }
 
 $( document ).ready(function() {
-    scan_for_profile();
+    chrome.runtime.sendMessage({"my_tab_id": "what is it?"});
 });

@@ -1,20 +1,28 @@
-# E-Reveal
+# E-Reveal: Reveal email addresses on LinkedIn Profiles!
 
 Get it on the Chrome Webstore [HERE](https://chrome.google.com/webstore/detail/e-reveal/cfjoijpnimmgcijcofonhdipdppipppl)!
 
-Reveal email addresses on LinkedIn Profiles based on a LIVE search on Google Apps for Business, DNS records, and Github code.
-
-How does it work?
+# How does it work?
 
 When you visit a LinkedIn profile, the chrome extension will:
+
 - Pull the person's name and company from the page.
-- Convert the company name into a domain
-- Create a list of possible emails via combining first name + last name + domain in various ways.
-- For each of the possible emails, check against Google, Github code search, and DNS domain records to see if the email address is valid.
+- Convert the company name into a domain via Clearbit's [free autocomplete api](https://clearbit.com/docs#autocomplete-api)
+- Create a list of possible emails via permutating combinations of  first name + last name + domain
+- For each of the possible emails, check each one and see if any are valid (validity check outlined in next section).
 - When a valid email address is detected, insert it into the LinkedIn profile you are viewing along with its source.
 
-NOTE
-- Your browser tab with the LinkedIn profile page must be active when you open it to kick off the search.
+# How do we check if an email is valid?
+
+- Gmail / google apps for businesses emails are validated with 100% accuracy via [this method](https://blog.0day.rocks/abusing-gmail-to-get-previously-unlisted-e-mail-addresses-41544b62b2)
+- We check DNS records with a reverse DNS lookup to detect if any domains have been registered with an email
+- We check Github's unauthenticated api for any commits made by an email
+- We check HaveIBeenPwned to see if an email has been dumped in any hacks
+
+None of this information is communicated to a server. All these checks are done straight from your browser, with the results immediately displayed on the LinkedIn profile (and never stored anywhere).
+
+# NOTE
+
 - Not every profile will have an email found.
 - Some profiles will have multiple emails found.
 - This plugin is fully open source, so you can verify the code yourself! Check it out here: https://github.com/emeth-/E-Reveal
