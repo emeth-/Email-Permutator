@@ -4,6 +4,8 @@ Get it on the Chrome Webstore [HERE](https://chrome.google.com/webstore/detail/e
 
 # How does it work?
 
+![](https://raw.githubusercontent.com/emeth-/E-Reveal/master/howitworks.png)
+
 When you visit a LinkedIn profile, the chrome extension will:
 
 - Pull the person's name and company from the page.
