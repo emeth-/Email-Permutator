@@ -4,7 +4,7 @@ Get it on the Chrome Webstore [HERE](https://chrome.google.com/webstore/detail/e
 
 # How does it work?
 
-![](https://raw.githubusercontent.com/emeth-/E-Reveal/master/howitworks.png)
+![](https://raw.githubusercontent.com/emeth-/E-Reveal/master/howitworks/E-Reveal.png)
 
 When you visit a LinkedIn profile, the chrome extension will:
 
