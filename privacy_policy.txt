@@ -1,0 +1,62 @@
+PRIVACY STATEMENT
+
+----
+
+SECTION 1 - WHAT DO WE DO WITH YOUR INFORMATION?
+
+Our chrome extension extracts First Name, Last Name, and Company from any linkedin profile page you browse. We send this data to various 3rd parties to create a list of possible email addresses. We then display those possible email addresses on the LinkedIn profile.
+
+At not point do we collect any of this information ourselves, all communication is done directly from your machine to the various 3rd parties for the conversion of Name + Company into email addresses.
+
+We do not receive or store your internet protocol (IP) address, though the 3rd party applications mentioned above may do so.
+
+We will not send you any emails, as we do not have your email!
+
+
+SECTION 2 - CONSENT
+
+How do you get my consent?
+
+When you install our extension and browse to a LinkedIn profile, we imply that you consent to the 3rd parties mentioned above collected the first name + last name + company information on any profile you visit, as well as your IP, for the sole reason of converting the aforementioned data into possible email addresses.
+
+
+How do I withdraw my consent?
+
+If after you opt-in, you change your mind, you may withdraw your consent for us by uninstalling our chrome extension.
+
+
+SECTION 3 - DISCLOSURE
+
+We may disclose your personal information if we are required by law to do so or if you violate our Terms of Service.
+
+
+SECTION 4 - THIRD-PARTY SERVICES
+
+
+In general, the third-party providers used by us will only collect, use and disclose your information to the extent necessary to allow them to perform the services they provide to us.
+
+Once you leave our store’s website or are redirected to a third-party website or application, you are no longer governed by this Privacy Policy or our website’s Terms of Service.
+
+
+SECTION 6 - SECURITY
+
+To protect your personal information, we take reasonable precautions and follow industry best practices to make sure it is not inappropriately lost, misused, accessed, disclosed, altered or destroyed.
+
+Any communication done is encrypted using secure socket layer technology (SSL) and stored with a AES-256 encryption.  Although no method of transmission over the Internet or electronic storage is 100% secure, we follow all PCI-DSS requirements and implement additional generally accepted industry standards.
+
+
+
+SECTION 7 - AGE OF CONSENT
+
+By using this site, you represent that you are at least the age of majority in your state or province of residence, or that you are the age of majority in your state or province of residence and you have given us your consent to allow any of your minor dependents to use this site.
+
+
+SECTION 8 - CHANGES TO THIS PRIVACY POLICY
+
+We reserve the right to modify this privacy policy at any time, so please review it frequently. Changes and clarifications will take effect immediately upon their posting on the website. If we make material changes to this policy, we will notify you here that it has been updated, so that you are aware of what information we collect, how we use it, and under what circumstances, if any, we use and/or disclose it.
+
+
+QUESTIONS AND CONTACT INFORMATION
+
+If you would like to: access, correct, amend or delete any personal information we have about you, register a complaint, or simply want more information contact our Privacy Compliance Officer at teachthe.net@gmail.com or by mail at TeachTheNet
+
