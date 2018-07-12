@@ -1,7 +1,7 @@
 {
     "name": "E-Reveal - Free LinkedIn Email Finder",
     "description": "Reveal email addresses on LinkedIn Profiles for free",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "icons": {
         "128": "img/circleLogo.png"
     },

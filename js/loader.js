@@ -129,8 +129,13 @@ function scan_for_profile() {
     var name;
     var company_name;
 
-    if ($('.pv-top-card-section__name').length > 0 && $('.pv-top-card-section__company').length > 0) {
+    if ($('.pv-top-card-section__name').length > 0 && $('.pv-top-card-v2-section__company-name').length > 0) {
         //normal account logged in linkedin profile
+        name = $.trim($('.pv-top-card-section__name').text());
+        company_name = $.trim($('.pv-top-card-v2-section__company-name').text());
+    }
+    else if ($('.pv-top-card-section__name').length > 0 && $('.pv-top-card-section__company').length > 0) {
+        //normal account logged in linkedin profile, old linkedin site
         name = $.trim($('.pv-top-card-section__name').text());
         company_name = $.trim($('.pv-top-card-section__company').text());
     }
