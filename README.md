@@ -1,6 +1,6 @@
 # E-Reveal: Reveal email addresses on LinkedIn Profiles!
 
-Get it on the Chrome Webstore [HERE](https://chrome.google.com/webstore/detail/e-reveal/cfjoijpnimmgcijcofonhdipdppipppl)!
+~~Get it on the Chrome Webstore [HERE](https://chrome.google.com/webstore/detail/e-reveal/cfjoijpnimmgcijcofonhdipdppipppl)!~~ (Removed due to LinkedIn Lawyers threatening me)
 
 # How does it work?
 
