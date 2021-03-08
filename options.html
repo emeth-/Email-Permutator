@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Permutator</title>
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css">
+    <script src="js/jquery.min.js"></script>
+    <script src='js/options.js'></script>
+</head>
+<body>
+    <h1>Find a Person's Email Address</h1>
+
+    <table>
+        <tr>
+            <td>
+            
+        <label>First name</label><br>
+        <input type="text" id="first_name" value="sean">
+
+            </td>
+            <td>
+            
+        <label>Last name</label><br>
+        <input type="text" id="last_name" value="kooyman">
+        
+            </td>
+            <td>
+            
+        <label>Company Domain <button id="dontknowdomain" style="font-size: 10px; padding:3px 6px">Don't Know?</button></label><br>
+        <input type="text" id="domain" placeholder="example.com" value="capitalone.com">
+        
+            </td>
+        </tr>
+        <tr>
+            <td colspan=3 style='text-align:center'>
+                <button id='submit'>Create Email Permutations</button>
+            </td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <table id="scan_results">
+        <caption>Potential Emails</caption>
+        <thead>
+            <tr>
+                <th><button id='trigger_scan'>Validate Emails</button></th>
+                <th><a target='_blank' href='https://blog.0day.rocks/abusing-gmail-to-get-previously-unlisted-e-mail-addresses-41544b62b2'>Google Apps</a></th>
+                <th><a target='_blank' href='https://www.trustedsec.com/blog/achieving-passive-user-enumeration-with-onedrive/'>Office 365</a></th>
+                <th><a target='_blank' href='https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api#authentication'>Github</a></th>
+                <th><a target='_blank' href='https://haveibeenpwned.com/'>HIBP</a></th>
+            </tr>
+        </thead>
+        <tbody id='results_tbody'>
+        </tbody>
+        <tfoot>
+            <th><button id='add'>+</button></th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tfoot>
+    </table>
+
+
+
+</body>
+</html>
