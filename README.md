@@ -4,9 +4,10 @@ Input a first name, last name, and company. Receive back a list of possible emai
 
 # How to install?
 
-This is a chrome extension. It's not in the chrome webstore - you'll have to install it as a 'developer mode' extension, see here for details: https://stackoverflow.com/a/24577660/8967723
+To get the files, click the green CODE button in github, then download ZIP, then unzip the file. The resulting folder is what you load as an unpacked chrome extension (it's not available in the chrome webstore).
 
-To get the files, click the green CODE button in github, then download ZIP, then unzip the file. The resulting folder is what you load as an unpacked chrome extension.
+Here are some details on how to install an unpacked chrome extension (aka developer extension): https://stackoverflow.com/a/24577660/8967723
+
 
 # How do we check if an email is valid?
 
