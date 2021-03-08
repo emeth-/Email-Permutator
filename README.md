@@ -2,6 +2,10 @@
 
 Input a first name, last name, and company. Receive back a list of possible email addresses, which we then attempt to verify via a variety of methods for you.
 
+# How to install?
+
+This is a chrome extension. It's not in the chrome webstore - you'll have to install it as a 'developer mode' extension, see here for details: https://stackoverflow.com/a/24577660/8967723
+
 # How do we check if an email is valid?
 
 - Gmail / google apps for businesses emails are validated with 100% accuracy via [this method](https://blog.0day.rocks/abusing-gmail-to-get-previously-unlisted-e-mail-addresses-41544b62b2)
