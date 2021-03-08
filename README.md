@@ -6,6 +6,8 @@ Input a first name, last name, and company. Receive back a list of possible emai
 
 This is a chrome extension. It's not in the chrome webstore - you'll have to install it as a 'developer mode' extension, see here for details: https://stackoverflow.com/a/24577660/8967723
 
+To get the files, click the green CODE button in github, then download ZIP, then unzip the file. The resulting folder is what you load as an unpacked chrome extension.
+
 # How do we check if an email is valid?
 
 - Gmail / google apps for businesses emails are validated with 100% accuracy via [this method](https://blog.0day.rocks/abusing-gmail-to-get-previously-unlisted-e-mail-addresses-41544b62b2)
